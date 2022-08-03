@@ -271,6 +271,7 @@ function genConfig(name) {
   // built-in vars
   const vars = {
     __VERSION__: version,
+    // __DEV__判断是否是开发环境还是生产环境，全局下使用
     __DEV__: `process.env.NODE_ENV !== 'production'`,
     __TEST__: false,
     __GLOBAL__: opts.format === 'umd' || name.includes('browser')

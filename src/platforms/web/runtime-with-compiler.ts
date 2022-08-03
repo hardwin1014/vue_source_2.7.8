@@ -22,10 +22,11 @@ Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
-  // 创建实例的时候获取的选项 el对象
+  // 创建实例的时候获取的选项 el就是DOM对象
   el = el && query(el)
 
   /* istanbul ignore if */
+  // 判断 如果el是body或者documentElement，就判断是否是生产环境。如果不是生产环境就警告，vue不能挂载到body和html标签上，然后返回当前vue实例
   if (el === document.body || el === document.documentElement) {
     __DEV__ &&
       warn(
@@ -34,9 +35,12 @@ Vue.prototype.$mount = function (
     return this
   }
 
+  // 获取到options选项
   const options = this.$options
   // resolve template/el and convert to render function
+  // 看options中是否传入render这个选项
   if (!options.render) {
+    // 如果没有传入render对象,那就获取模板，把模板转换成render函数
     let template = options.template
     if (template) {
       if (typeof template === 'string') {
@@ -89,6 +93,7 @@ Vue.prototype.$mount = function (
       }
     }
   }
+  // 如果传递了render函数，就会调用mount方法，渲染dom
   return mount.call(this, el, hydrating)
 }
 
