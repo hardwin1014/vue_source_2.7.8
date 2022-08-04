@@ -4,25 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bddb7d00-b189-4d76-ac18-215993182713" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/BACKERS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/classic/01-runtime-compiler/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/examples/classic/01_runtime_compiler/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/config.js" afterDir="false" />
+    <list default="true" id="49938206-4f5a-4c6b-8db3-d0adedc58c46" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/global-api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/global-api/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/instance/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/instance/init.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/init.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime-with-compiler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime-with-compiler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/platforms/web/util/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/util/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="HTML File" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -35,14 +30,12 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="ProjectId" id="2CpMAOjbl3iUpx3T7JN76WWP3hT" />
+  <component name="ProjectId" id="2CsXOCHPIc2cX4BmlINRUDnOyxS" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -52,48 +45,19 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="pnpm" />
-    <property name="prettierjs.PrettierConfiguration.Package" value="E:\源码分析\vue\node_modules\prettier" />
-    <property name="ts.external.directory.path" value="E:\源码分析\vue\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="D:\WebStorm 2021.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
-  <component name="RunManager" selected="npm.dev">
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="build" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="npm.dev" />
-        <item itemvalue="npm.build" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="bddb7d00-b189-4d76-ac18-215993182713" name="变更" comment="" />
-      <created>1659494929702</created>
+      <changelist id="49938206-4f5a-4c6b-8db3-d0adedc58c46" name="变更" comment="" />
+      <created>1659592231473</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1659494929702</updated>
-      <workItem from="1659494931767" duration="15638000" />
+      <updated>1659592231473</updated>
+      <workItem from="1659592232902" duration="154000" />
+      <workItem from="1659592399807" duration="9052000" />
     </task>
     <servers />
   </component>
@@ -101,14 +65,6 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

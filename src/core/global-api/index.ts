@@ -28,11 +28,14 @@ export function initGlobalAPI(Vue: GlobalAPI) {
       )
     }
   }
+
+  // 初始化Vue.config对象，定义了vue的静态成员
   Object.defineProperty(Vue, 'config', configDef)
 
   // exposed util methods.
   // NOTE: these are not considered part of the public API - avoid relying on
   // them unless you are aware of the risk.
+  // 这些工具方法不视做全局API的一部分，除非你已经意识到某些风险，否则不要去依赖他们
   Vue.util = {
     warn,
     extend,
@@ -40,16 +43,21 @@ export function initGlobalAPI(Vue: GlobalAPI) {
     defineReactive
   }
 
+  // 静态方法，set delete  nextTick
   Vue.set = set
   Vue.delete = del
   Vue.nextTick = nextTick
 
   // 2.6 explicit observable API
+  // 让一个对象变成可响应式的
   Vue.observable = <T>(obj: T): T => {
     observe(obj)
     return obj
   }
 
+  // 初始化Vue.options对象，并给其扩展
+  // components/directives/filters
+  // export const ASSET_TYPES = ['component', 'directive', 'filter'] as const
   Vue.options = Object.create(null)
   ASSET_TYPES.forEach(type => {
     Vue.options[type + 's'] = Object.create(null)
@@ -61,6 +69,7 @@ export function initGlobalAPI(Vue: GlobalAPI) {
 
   extend(Vue.options.components, builtInComponents)
 
+  // 注册了vue.use  vue.mixin  vue.extend等方法
   initUse(Vue)
   initMixin(Vue)
   initExtend(Vue)

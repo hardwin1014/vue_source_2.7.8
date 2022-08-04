@@ -2,6 +2,7 @@ import config from 'core/config'
 import { warn, cached } from 'core/util/index'
 import { mark, measure } from 'core/util/perf'
 
+// 导入构造函数
 import Vue from './runtime/index'
 import { query } from './util/index'
 import { compileToFunctions } from './compiler/index'
@@ -17,9 +18,11 @@ const idToTemplate = cached(id => {
   return el && el.innerHTML
 })
 
+// 保留Vue实例的$mount方法，目的是为了重写mount方法，增加新的功能
 const mount = Vue.prototype.$mount
 Vue.prototype.$mount = function (
   el?: string | Element,
+  // 非SSR情况下为false，SSR时候为true
   hydrating?: boolean
 ): Component {
   // 创建实例的时候获取的选项 el就是DOM对象
@@ -35,7 +38,7 @@ Vue.prototype.$mount = function (
     return this
   }
 
-  // 获取到options选项
+  // 获取到options选项，看有没有render函数，没有的话，把template编译成render函数
   const options = this.$options
   // resolve template/el and convert to render function
   // 看options中是否传入render这个选项
@@ -100,6 +103,7 @@ Vue.prototype.$mount = function (
 /**
  * Get outerHTML of elements, taking care
  * of SVG elements in IE as well.
+ * 辅助函数  获取元素的外部html
  */
 function getOuterHTML(el: Element): string {
   if (el.outerHTML) {
@@ -111,6 +115,7 @@ function getOuterHTML(el: Element): string {
   }
 }
 
+// 把html字符串编译成render函数
 Vue.compile = compileToFunctions
 
 export default Vue as GlobalAPI
