@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49938206-4f5a-4c6b-8db3-d0adedc58c46" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/global-api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/global-api/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/init.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/init.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime-with-compiler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime-with-compiler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/global-api/use.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/global-api/use.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/util.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,24 +27,29 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es5.d.ts" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2CsXOCHPIc2cX4BmlINRUDnOyxS" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="ts.external.directory.path" value="D:\WebStorm 2021.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "E:/源码分析/vue",
+    "nodejs_package_manager_path": "pnpm",
+    "prettierjs.PrettierConfiguration.Package": "E:\\源码分析\\vue\\node_modules\\prettier",
+    "ts.external.directory.path": "E:\\源码分析\\vue\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -57,14 +59,14 @@
       <option name="presentableId" value="Default" />
       <updated>1659592231473</updated>
       <workItem from="1659592232902" duration="154000" />
-      <workItem from="1659592399807" duration="9052000" />
+      <workItem from="1659592399807" duration="11572000" />
+      <workItem from="1659662542493" duration="805000" />
+      <workItem from="1659663765863" duration="249000" />
+      <workItem from="1659671939072" duration="9579000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

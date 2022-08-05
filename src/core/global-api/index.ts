@@ -18,9 +18,10 @@ import {
 import type { GlobalAPI } from 'types/global-api'
 
 export function initGlobalAPI(Vue: GlobalAPI) {
-  // config
+  // config 对象，有get方法
   const configDef: Record<string, any> = {}
   configDef.get = () => config
+  // 判断环境，如果是开发环境，会触发一个set方法，会抛出警告，不要去替换config，可以在config中挂载一些方法
   if (__DEV__) {
     configDef.set = () => {
       warn(
@@ -67,11 +68,15 @@ export function initGlobalAPI(Vue: GlobalAPI) {
   // components with in Weex's multi-instance scenarios.
   Vue.options._base = Vue
 
+  // 注册全局组件
   extend(Vue.options.components, builtInComponents)
 
-  // 注册了vue.use  vue.mixin  vue.extend等方法
+  // 注册了Vue.use() 用来注册插件
   initUse(Vue)
+  // 注册Vue.mixin() 来实现混入
   initMixin(Vue)
+  // 注册Vue.extend() 基于传入的options返回一个组件的构造函数
   initExtend(Vue)
+  // 注册 Vue.directive()、 Vue.component()、Vue.filter()
   initAssetRegisters(Vue)
 }
