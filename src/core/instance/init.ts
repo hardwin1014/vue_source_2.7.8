@@ -14,7 +14,7 @@ import { EffectScope } from 'v3/reactivity/effectScope'
 let uid = 0
 
 export function initMixin(Vue: typeof Component) {
-  // 1. 给Vue实例增加 _init()方法
+  // 1. 给Vue实例增加 _init()方法，Vue的入口
   Vue.prototype._init = function (options?: Record<string, any>) {
     const vm: Component = this
     // a uid

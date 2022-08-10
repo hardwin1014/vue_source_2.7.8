@@ -18,6 +18,7 @@ function Vue(options) {
   // 调用_init方法
   this._init(options)
 }
+// 下面这几个函数做的事情都是  给vue的原型上混入了一些成员
 
 //@ts-expect-error Vue has function type
 // 注册vm的_init()方法，初始化vm

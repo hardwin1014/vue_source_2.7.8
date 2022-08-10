@@ -336,6 +336,8 @@ export function stateMixin(Vue: typeof Component) {
   // flow somehow has problems with directly declared definition object
   // when using Object.defineProperty, so we have to procedurally build up
   // the object here.
+
+  // 属性描述符中分别设置了get方法，返回了对应的属性，this._data和this._props
   const dataDef: any = {}
   dataDef.get = function () {
     return this._data
@@ -344,6 +346,8 @@ export function stateMixin(Vue: typeof Component) {
   propsDef.get = function () {
     return this._props
   }
+
+  // 如果是开发环境，如果给$data和$props赋值，会发出警告
   if (__DEV__) {
     dataDef.set = function () {
       warn(
@@ -356,12 +360,17 @@ export function stateMixin(Vue: typeof Component) {
       warn(`$props is readonly.`, this)
     }
   }
+
+  // 使用defineProperty给Vue的原型上挂载$data和$props, dataDef和propsDef分别是属性的描述符
+  // 使用defineProperty是为了设置不让给data props重新赋值
   Object.defineProperty(Vue.prototype, '$data', dataDef)
   Object.defineProperty(Vue.prototype, '$props', propsDef)
 
+  // 挂载$set和$delete
   Vue.prototype.$set = set
   Vue.prototype.$delete = del
 
+  // 挂载$watch
   Vue.prototype.$watch = function (
     expOrFn: string | (() => any),
     cb: any,

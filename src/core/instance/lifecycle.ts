@@ -59,19 +59,21 @@ export function initLifecycle(vm: Component) {
 }
 
 export function lifecycleMixin(Vue: typeof Component) {
+  // _update 方法的作用是把VNode渲染成真实的DOM
+  // 首次渲染会调用，数据更新会调用
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
     const vm: Component = this
     const prevEl = vm.$el
     const prevVnode = vm._vnode
     const restoreActiveInstance = setActiveInstance(vm)
     vm._vnode = vnode
-    // Vue.prototype.__patch__ is injected in entry points
-    // based on the rendering backend used.
+    // Vue.prototype.__patch__被注入到入口点, __patch__把虚拟DOM转换成真实的DOM
+    // 基于渲染后端使用
     if (!prevVnode) {
-      // initial render
+      // 最初的渲染
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
     } else {
-      // updates
+      // 更新数据渲染
       vm.$el = vm.__patch__(prevVnode, vnode)
     }
     restoreActiveInstance()
@@ -82,14 +84,15 @@ export function lifecycleMixin(Vue: typeof Component) {
     if (vm.$el) {
       vm.$el.__vue__ = vm
     }
-    // if parent is an HOC, update its $el as well
+    // 如果父节点是一个HOC，也更新它的$el
     if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
       vm.$parent.$el = vm.$el
     }
-    // updated hook is called by the scheduler to ensure that children are
-    // updated in a parent's updated hook.
+    //调度器调用updated钩子来确保子钩子被更新
+    //在父类的钩子中更新。
   }
 
+  // 强制更新，使用watch监听
   Vue.prototype.$forceUpdate = function () {
     const vm: Component = this
     if (vm._watcher) {
@@ -97,6 +100,7 @@ export function lifecycleMixin(Vue: typeof Component) {
     }
   }
 
+  // 销毁
   Vue.prototype.$destroy = function () {
     const vm: Component = this
     if (vm._isBeingDestroyed) {

@@ -93,15 +93,19 @@ export function setCurrentRenderingInstance(vm: Component) {
 }
 
 export function renderMixin(Vue: typeof Component) {
-  // install runtime convenience helpers
+  // 安装了渲染相关的帮助和方法
   installRenderHelpers(Vue.prototype)
 
+  // 注册$nextTick,(渲染dom完成之后触发)
   Vue.prototype.$nextTick = function (fn: (...args: any[]) => any) {
     return nextTick(fn, this)
   }
 
+  // render 用户定义的render
   Vue.prototype._render = function (): VNode {
     const vm: Component = this
+
+    // 通过options获取render，这个render是用户定义的render或者是模板渲染的render
     const { render, _parentVnode } = vm.$options
 
     if (_parentVnode && vm._isMounted) {
@@ -116,17 +120,19 @@ export function renderMixin(Vue: typeof Component) {
       }
     }
 
-    // set parent vnode. this allows render functions to have access
-    // to the data on the placeholder node.
+    // 设置父vnode。这允许呈现函数具有访问权限
+    // 转换为占位符节点上的数据。
     vm.$vnode = _parentVnode!
     // render self
     let vnode
     try {
-      // There's no need to maintain a stack because all render fns are called
-      // separately from one another. Nested component's render fns are called
-      // when parent component is patched.
+      //不需要维护堆栈，因为所有渲染fns都被调用
+      //分开。调用嵌套组件的渲染fns
+      //当父组件被修补时。
       setCurrentInstance(vm)
       currentRenderingInstance = vm
+
+      // 调用render  vm._renderProxy是为了改变render内部的this      vm.$createElement 是h函数，生成虚拟dom
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e: any) {
       handleError(e, vm, `render`)

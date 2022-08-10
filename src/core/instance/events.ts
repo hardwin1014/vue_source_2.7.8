@@ -58,19 +58,25 @@ export function updateComponentListeners(
 
 export function eventsMixin(Vue: typeof Component) {
   const hookRE = /^hook:/
+  // 以下这几个事件使用的发布订阅模式
+
+  // 注册事件
   Vue.prototype.$on = function (
     event: string | Array<string>,
     fn: Function
   ): Component {
     const vm: Component = this
+    // 判断是否是数组，如果是数组，就循环注册事件，可以给多个事件注册同一个事件处理函数
     if (isArray(event)) {
       for (let i = 0, l = event.length; i < l; i++) {
         vm.$on(event[i], fn)
       }
     } else {
+      // 如果是字符串的话，会获取_events[],_events是一个对象，在上面定义了空对象
+      // 事件的属性就是对象的名称，如果找不到的话，就会把事件名称对应的值设置成[],并把事件处理函数添加至数组中
       ;(vm._events[event] || (vm._events[event] = [])).push(fn)
-      // optimize hook:event cost by using a boolean flag marked at registration
-      // instead of a hash lookup
+      //优化钩子:通过在注册时标记布尔值标记事件开销
+      //而不是散列查找
       if (hookRE.test(event)) {
         vm._hasHookEvent = true
       }
@@ -78,6 +84,7 @@ export function eventsMixin(Vue: typeof Component) {
     return vm
   }
 
+  // 注册事件，只会触发一次
   Vue.prototype.$once = function (event: string, fn: Function): Component {
     const vm: Component = this
     function on() {
@@ -89,6 +96,7 @@ export function eventsMixin(Vue: typeof Component) {
     return vm
   }
 
+  // 取消事件
   Vue.prototype.$off = function (
     event?: string | Array<string>,
     fn?: Function
@@ -128,6 +136,7 @@ export function eventsMixin(Vue: typeof Component) {
     return vm
   }
 
+  // 触发事件
   Vue.prototype.$emit = function (event: string): Component {
     const vm: Component = this
     if (__DEV__) {

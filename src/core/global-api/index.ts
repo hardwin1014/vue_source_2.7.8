@@ -56,16 +56,15 @@ export function initGlobalAPI(Vue: GlobalAPI) {
     return obj
   }
 
-  // 初始化Vue.options对象，并给其扩展
-  // components/directives/filters
+  // 初始化Vue.options对象，存储全局的components/directives/filters
   // export const ASSET_TYPES = ['component', 'directive', 'filter'] as const
   Vue.options = Object.create(null)
   ASSET_TYPES.forEach(type => {
     Vue.options[type + 's'] = Object.create(null)
   })
 
-  // this is used to identify the "base" constructor to extend all plain-object
-  // components with in Weex's multi-instance scenarios.
+  // 这用于标识扩展所有普通对象的“基”构造函数  initAssetRegisters方法中有使用
+  // 在Weex的多实例场景中。
   Vue.options._base = Vue
 
   // 注册全局组件
