@@ -49,6 +49,7 @@ export function initLifecycle(vm: Component) {
   vm.$children = []
   vm.$refs = {}
 
+  // 以下划线命名的成员是私有成员
   vm._provided = parent ? parent._provided : Object.create(null)
   vm._watcher = null
   vm._inactive = null

@@ -34,6 +34,7 @@ if (__DEV__) {
     )
   }
 
+  // 判断浏览器是否支持proxy这个对象
   const hasProxy = typeof Proxy !== 'undefined' && isNative(Proxy)
 
   if (hasProxy) {
@@ -82,13 +83,16 @@ if (__DEV__) {
   }
 
   initProxy = function initProxy(vm) {
+    // 判断浏览器是否支持proxy
+    // 如果proxy不等于undefined或null的话,证明支持proxy，会把渲染对象（_renderProxy）通过new Proxy初始化
     if (hasProxy) {
-      // determine which proxy handler to use
       const options = vm.$options
       const handlers =
         options.render && options.render._withStripped ? getHandler : hasHandler
+      // 通过proxy代理当前浏览器
       vm._renderProxy = new Proxy(vm, handlers)
     } else {
+      // 如果不支持proxy，那就把渲染对象设置成vue实例
       vm._renderProxy = vm
     }
   }

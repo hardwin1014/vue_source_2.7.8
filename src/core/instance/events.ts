@@ -10,11 +10,14 @@ import {
 import { updateListeners } from '../vdom/helpers/index'
 
 export function initEvents(vm: Component) {
+  // 存储事件名称和对应的处理函数，对应的属性是事件名称，值是事件处理函数，是数组的形式，因为一个事件名称可以对应多个处理函数
   vm._events = Object.create(null)
   vm._hasHookEvent = false
   // init parent attached events
-  const listeners = vm.$options._parentListeners
+  // 获取父元素上附加的事件
+  const listeners = vm.$options. _parentListeners
   if (listeners) {
+    // 注册到当前组件，把父组件附加的事件，附加到vm上
     updateComponentListeners(vm, listeners)
   }
 }
@@ -73,7 +76,7 @@ export function eventsMixin(Vue: typeof Component) {
       }
     } else {
       // 如果是字符串的话，会获取_events[],_events是一个对象，在上面定义了空对象
-      // 事件的属性就是对象的名称，如果找不到的话，就会把事件名称对应的值设置成[],并把事件处理函数添加至数组中
+      // 会从当前事件中获取事件，如果找不到的话，就会把事件名称对应的值设置成空数组[],并把事件处理函数添加至数组中
       ;(vm._events[event] || (vm._events[event] = [])).push(fn)
       //优化钩子:通过在注册时标记布尔值标记事件开销
       //而不是散列查找

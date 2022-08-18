@@ -24,6 +24,8 @@ export function initRender(vm: Component) {
   const options = vm.$options
   const parentVnode = (vm.$vnode = options._parentVnode!) // the placeholder node in parent tree
   const renderContext = parentVnode && (parentVnode.context as Component)
+
+  // 初始化插槽有关的属性
   vm.$slots = resolveSlots(options._renderChildren, renderContext)
   vm.$scopedSlots = parentVnode
     ? normalizeScopedSlots(
@@ -36,10 +38,15 @@ export function initRender(vm: Component) {
   // so that we get proper render context inside it.
   // args order: tag, data, children, normalizationType, alwaysNormalize
   // internal version is used by render functions compiled from templates
+
+
   // @ts-expect-error
   vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
   // normalization is always applied for the public version, used in
   // user-written render functions.
+
+
+  // h函数，把虚拟dom转换为真实dom，当把template模板编译成render函数时，会调用_c
   // @ts-expect-error
   vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
 
@@ -47,6 +54,9 @@ export function initRender(vm: Component) {
   // they need to be reactive so that HOCs using them are always updated
   const parentData = parentVnode && parentVnode.data
 
+
+  // 初始化了$attrs和$listeners,是响应式的
+  // 如果是开发环境的话，不允许直接赋值。如果直接赋值会报警告
   /* istanbul ignore else */
   if (__DEV__) {
     defineReactive(
@@ -68,6 +78,7 @@ export function initRender(vm: Component) {
       true
     )
   } else {
+    // 生产环境执行效率要高一些
     defineReactive(
       vm,
       '$attrs',
@@ -93,7 +104,7 @@ export function setCurrentRenderingInstance(vm: Component) {
 }
 
 export function renderMixin(Vue: typeof Component) {
-  // 安装了渲染相关的帮助和方法
+  // 安装了渲染相关的帮助和方法，传入的是vue的原型
   installRenderHelpers(Vue.prototype)
 
   // 注册$nextTick,(渲染dom完成之后触发)

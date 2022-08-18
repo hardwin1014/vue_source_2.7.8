@@ -39,6 +39,7 @@ const sharedPropertyDefinition = {
   set: noop
 }
 
+// proxy代理，获取和设置属性的时候，其实是获取的get和set，最终访问的时候还是通过this._props访问的
 export function proxy(target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.get = function proxyGetter() {
     return this[sourceKey][key]
@@ -51,18 +52,24 @@ export function proxy(target: Object, sourceKey: string, key: string) {
 
 export function initState(vm: Component) {
   const opts = vm.$options
+  // 1. 接收两个参数，vue实例和props属性，把props成员注入到vue实例中来，
   if (opts.props) initProps(vm, opts.props)
 
   // Composition API
   initSetup(vm)
 
+  // 初始化了methods
   if (opts.methods) initMethods(vm, opts.methods)
   if (opts.data) {
+    // 把属性注入到实例上，判断是否和props，methods重名
     initData(vm)
   } else {
+    // observe将数据转成响应式对象
     const ob = observe((vm._data = {}))
     ob && ob.vmCount++
   }
+
+  // 初始化了计算属性和监听器，并注入到了vue实例里面来
   if (opts.computed) initComputed(vm, opts.computed)
   if (opts.watch && opts.watch !== nativeWatch) {
     initWatch(vm, opts.watch)
@@ -71,6 +78,7 @@ export function initState(vm: Component) {
 
 function initProps(vm: Component, propsOptions: Object) {
   const propsData = vm.$options.propsData || {}
+  // 1. 将props存储到常量里面来,所有的成员都会在_props中存储
   const props = (vm._props = shallowReactive({}))
   // cache prop keys so that future props updates can iterate using Array
   // instead of dynamic object key enumeration.
@@ -80,12 +88,15 @@ function initProps(vm: Component, propsOptions: Object) {
   if (!isRoot) {
     toggleObserving(false)
   }
+
+  // 遍历props中的所有的属性,通过defineReactive转换成get和set存储到props里面（vm._props）
   for (const key in propsOptions) {
     keys.push(key)
     const value = validateProp(key, propsOptions, propsData, vm)
     /* istanbul ignore else */
     if (__DEV__) {
       const hyphenatedKey = hyphenate(key)
+      // 如果直接赋值会发送一个警告
       if (
         isReservedAttribute(hyphenatedKey) ||
         config.isReservedAttr(hyphenatedKey)
@@ -107,11 +118,13 @@ function initProps(vm: Component, propsOptions: Object) {
         }
       })
     } else {
+      // 如果是生产环境的话,直接将属性转为getter和setter
       defineReactive(props, key, value)
     }
     // static props are already proxied on the component's prototype
     // during Vue.extend(). We only need to proxy props defined at
     // instantiation here.
+    // 判断属性是否在vue实例上，如果不在会使用proxy代理到vm上
     if (!(key in vm)) {
       proxy(vm, `_props`, key)
     }
@@ -119,8 +132,11 @@ function initProps(vm: Component, propsOptions: Object) {
   toggleObserving(true)
 }
 
+// 作用：注入到vue实例和进行对数据响应式之前，进行判断data中的成员是否和props，methods重名（如果重名会在开发环境进行警告）
 function initData(vm: Component) {
+  // 先获取options的data选项
   let data: any = vm.$options.data
+  // 初始化了vm._data,判断data选项是否是function，  getData是把data当成函数来处理(组件中的data是一个函数)，vue实例中的data是一个对象
   data = vm._data = isFunction(data) ? getData(data, vm) : data || {}
   if (!isPlainObject(data)) {
     data = {}
@@ -132,10 +148,14 @@ function initData(vm: Component) {
       )
   }
   // proxy data on instance
+  // 获取data中的所有属性,
   const keys = Object.keys(data)
+  // 获取props / methods
   const props = vm.$options.props
   const methods = vm.$options.methods
+
   let i = keys.length
+  // 判断data上的成员是否和props、 methods重名，因为最终都要注入到props中来
   while (i--) {
     const key = keys[i]
     if (__DEV__) {
@@ -151,10 +171,14 @@ function initData(vm: Component) {
           vm
         )
     } else if (!isReserved(key)) {
+      // 如果是以_或者$开头，不会将属性注入到实例中来
+
+      // 如果不是以$_开头，会使用proxy把这个属性注入到实例中来，同时传入一个_data
       proxy(vm, `_data`, key)
     }
   }
   // observe data
+  // 最后做一个响应式的处理
   const ob = observe(data)
   ob && ob.vmCount++
 }
@@ -163,6 +187,7 @@ export function getData(data: Function, vm: Component): any {
   // #7573 disable dep collection when invoking data getters
   pushTarget()
   try {
+    // 此时的data是一个函数，vue组件中的data是一个函数
     return data.call(vm, vm)
   } catch (e: any) {
     handleError(e, vm, `data()`)
@@ -276,10 +301,14 @@ function createGetterInvoker(fn) {
   }
 }
 
+// 把选项中的methods注入到vue实例，注入之前会判断和props中有重名的属性，判断了一下命名的规范，是否以$和_开头
 function initMethods(vm: Component, methods: Object) {
+  // 1.先获取props实例
   const props = vm.$options.props
   for (const key in methods) {
+    // 开发环境中
     if (__DEV__) {
+      // 判断method是否是function，如果不是function，会发送警告
       if (typeof methods[key] !== 'function') {
         warn(
           `Method "${key}" has type "${typeof methods[
@@ -289,9 +318,12 @@ function initMethods(vm: Component, methods: Object) {
           vm
         )
       }
+      // 如果在props对象中存在，会发送一个警告，警告method的key在props中存在
       if (props && hasOwn(props, key)) {
         warn(`Method "${key}" has already been defined as a prop.`, vm)
       }
+      // 判断key是否在vue实例中存在，并且判断是否以_或者$开头。如果以_开头，vue会认为是一个私有的属性，所有以$开头的成员，我们会以为vue的成员
+      // 所以我们不建议命名时以$和_开头
       if (key in vm && isReserved(key)) {
         warn(
           `Method "${key}" conflicts with an existing Vue instance method. ` +
@@ -299,6 +331,8 @@ function initMethods(vm: Component, methods: Object) {
         )
       }
     }
+
+    // 判断是否是function，如果不是function的话返回一个noop(空函数)，不然就返回，把当前这个函数的this指向改成vm
     vm[key] = typeof methods[key] !== 'function' ? noop : bind(methods[key], vm)
   }
 }
