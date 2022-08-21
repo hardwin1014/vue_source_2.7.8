@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49938206-4f5a-4c6b-8db3-d0adedc58c46" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/events.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/events.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/init.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/init.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/inject.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/inject.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/lifecycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/lifecycle.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/proxy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/proxy.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/render.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/render.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/state.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,10 +40,10 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/源码分析/vue",
+    "last_opened_file_path": "/Users/weixinhui/Documents/GitHub/vue_source_2.7.8",
     "nodejs_package_manager_path": "pnpm",
     "prettierjs.PrettierConfiguration.Package": "E:\\源码分析\\vue\\node_modules\\prettier",
-    "ts.external.directory.path": "E:\\源码分析\\vue\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "/Users/weixinhui/Documents/GitHub/vue_source_2.7.8/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -72,6 +66,7 @@
       <workItem from="1660109208872" duration="11714000" />
       <workItem from="1660184381151" duration="1903000" />
       <workItem from="1660790256994" duration="14402000" />
+      <workItem from="1661065224386" duration="2679000" />
     </task>
     <servers />
   </component>
