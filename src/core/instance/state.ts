@@ -58,13 +58,15 @@ export function initState(vm: Component) {
   // Composition API
   initSetup(vm)
 
-  // 初始化了methods
+  // 2. 初始化了methods
   if (opts.methods) initMethods(vm, opts.methods)
+  // 3. 判断options是否有data选项，如果有，初始化data，会遍历data中的成员，把这些成员注入到vue的实例上
   if (opts.data) {
     // 把属性注入到实例上，判断是否和props，methods重名
     initData(vm)
   } else {
-    // observe将数据转成响应式对象
+    // 如果options没有传入data选项，那么就把data初始化成空对象，转换成响应式的
+    // observe将数据转成响应式对象，为值创建观察者
     const ob = observe((vm._data = {}))
     ob && ob.vmCount++
   }
@@ -178,8 +180,9 @@ function initData(vm: Component) {
     }
   }
   // observe data
-  // 最后做一个响应式的处理
+  // 最后做一个响应式的处理，响应式处理的入口
   const ob = observe(data)
+  // 以这个对象作为根$data的vm的数量，进行累加
   ob && ob.vmCount++
 }
 

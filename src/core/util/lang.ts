@@ -16,10 +16,13 @@ export function isReserved(str: string): boolean {
 
 /**
  * Define a property.
+ * enumerable 可枚举的
  */
 export function def(obj: Object, key: string, val: any, enumerable?: boolean) {
   Object.defineProperty(obj, key, {
-    value: val,
+    value: val, // 属性描述符，在value里面设置了属性的值
+    // 设置属性是否是可枚举的，enumerable没有传，对undefined进行两次取反,为false。
+    // 此行为的目的是表示这个是不可枚举的，ob这个属性只是为了记录这个对象，不需要遍历出getter和setter，所以设置为false
     enumerable: !!enumerable,
     writable: true,
     configurable: true
