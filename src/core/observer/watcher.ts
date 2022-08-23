@@ -66,19 +66,21 @@ export default class Watcher implements DepTarget {
 
   constructor(
     vm: Component | null,
-    expOrFn: string | (() => any),
+    expOrFn: string | (() => any), // updateComponent
     cb: Function,
     options?: WatcherOptions | null,
     isRenderWatcher?: boolean
   ) {
     recordEffectScope(this, activeEffectScope || (vm ? vm._scope : undefined))
+    // 先记录vue实例到vm中，在判断是否是首次渲染
     if ((this.vm = vm)) {
+       // 然后判断是否是 渲染watcher
       if (isRenderWatcher) {
-        // 将当前对象挂载到vue的watcher实例上
+        // 如果是把当前vue实例记录到vue实例的_watcher上
         vm._watcher = this
       }
     }
-    // options
+    // options  非渲染watcher可能会传进来一些渲染选项
     if (options) {
       this.deep = !!options.deep
       this.user = !!options.user
@@ -90,23 +92,30 @@ export default class Watcher implements DepTarget {
         this.onTrigger = options.onTrigger
       }
     } else {
+      // 如果没有传入options选项的话，他们默认的值都是false
       this.deep = this.user = this.lazy = this.sync = false
     }
-    this.cb = cb
-    this.id = ++uid // uid for batching
-    this.active = true
+    // 记录了很多属性
+    this.cb = cb // noop  cb传入的是一个空的函数
+    this.id = ++uid // uid for batching  唯一标识watcher，用来自增
+    this.active = true // 标识当前watcher是否是活动的watcher，默认为true
     this.post = false
-    this.dirty = this.lazy // for lazy watchers
+    this.dirty = this.lazy // for lazy watchers 延迟执行（计算属性）
     this.deps = []
     this.newDeps = []
     this.depIds = new Set()
     this.newDepIds = new Set()
     this.expression = __DEV__ ? expOrFn.toString() : ''
-    // parse expression for getter
+
+    // getter的解析表达式
     if (isFunction(expOrFn)) {
       this.getter = expOrFn
     } else {
+      // expOrFn是字符串的时候，例如'watch: { 'person.name': function... }'
+      // parsePath('person.name') 返回一个函数获取person.name的值
+      // getter 是一个函数，作用：返回属性的结果，触发了属性的getter，回去收集依赖
       this.getter = parsePath(expOrFn)
+      // 如果getter不存在，或者是开发环境的话，会触发一个警告
       if (!this.getter) {
         this.getter = noop
         __DEV__ &&
@@ -118,6 +127,7 @@ export default class Watcher implements DepTarget {
           )
       }
     }
+    // 会判断lazy，如果是渲染watcher，lazy默认为false，会返回get方法
     this.value = this.lazy ? undefined : this.get()
   }
 
@@ -125,10 +135,14 @@ export default class Watcher implements DepTarget {
    * Evaluate the getter, and re-collect dependencies.
    */
   get() {
+    // 把当前的watcher入栈，为什么要入栈里面呢？
+    // 因为有父子组件嵌套的时候，把父组件的watcher入栈，再去处理子组件的watcher，然后再把父组件的watcher出栈
     pushTarget(this)
     let value
     const vm = this.vm
     try {
+      // 如果是渲染函数的话，getter里面存储的是updateComponent
+      // 所以在这执行updateComponent,执行完之后把虚拟dom生成真实dom渲染到页面上来
       value = this.getter.call(vm, vm)
     } catch (e: any) {
       if (this.user) {
@@ -137,12 +151,17 @@ export default class Watcher implements DepTarget {
         throw e
       }
     } finally {
-      // "touch" every property so they are all tracked as
-      // dependencies for deep watching
+
+      // watcher每个属性，这样它们都被跟踪为
+      // 依赖的深度监视
+      // 当我们监听一个对象的话，会监听对象下的子属性
       if (this.deep) {
         traverse(value)
       }
+
+      // 执行完之后，会做一些清理的工作，把target从栈中清空
       popTarget()
+      // 清理依赖项收集，把watcher从subs数组中移除,并且把watcher中记录的dep也清除
       this.cleanupDeps()
     }
     return value

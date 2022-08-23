@@ -141,6 +141,7 @@ export function lifecycleMixin(Vue: typeof Component) {
   }
 }
 
+// 创建watcher对象的位置
 export function mountComponent(
   vm: Component,
   el: Element | null | undefined,
@@ -193,12 +194,16 @@ export function mountComponent(
       measure(`vue ${name} patch`, startTag, endTag)
     }
   } else {
+    // 这里调用了render和update
+    // render是用户传入的render函数，或者template编译成的render函数，作用：帮我们生成虚拟DOM
+    // update帮我们调用了path函数，作用：对比新旧虚拟DOM的差异，并把差异更新到真实的dom上去
     updateComponent = () => {
       vm._update(vm._render(), hydrating)
     }
   }
 
   const watcherOptions: WatcherOptions = {
+    // beforeUpdate钩子函数
     before() {
       if (vm._isMounted && !vm._isDestroyed) {
         callHook(vm, 'beforeUpdate')
@@ -214,7 +219,7 @@ export function mountComponent(
   //我们将其设置为vm._watcher在watcher的构造函数中
   //因为观察者的初始补丁可能会调用$forceUpdate(例如inside child组件挂载的钩子)，它依赖于vm._watcher已经定义
 
-  //
+  // 创建Watcher对象，传入 vue实例、updateComponent、noop是空函数，对渲染watcher是没有用，其他两个有用、watcherOptions函数、true是标识当前创建的watcher是渲染watcher
   new Watcher(
     vm,
     updateComponent,
