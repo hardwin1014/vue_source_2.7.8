@@ -6,9 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="49938206-4f5a-4c6b-8db3-d0adedc58c46" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/instance/lifecycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/lifecycle.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/observer/array.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/observer/array.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/observer/dep.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/observer/dep.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/observer/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/observer/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/util/lang.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/util/lang.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/observer/watcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/observer/watcher.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/util/env.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/util/env.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/util.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -74,6 +74,7 @@ export default class Watcher implements DepTarget {
     recordEffectScope(this, activeEffectScope || (vm ? vm._scope : undefined))
     if ((this.vm = vm)) {
       if (isRenderWatcher) {
+        // 将当前对象挂载到vue的watcher实例上
         vm._watcher = this
       }
     }
@@ -149,13 +150,17 @@ export default class Watcher implements DepTarget {
 
   /**
    * Add a dependency to this directive.
+   * 给这个指令添加一个依赖项。
    */
   addDep(dep: Dep) {
     const id = dep.id
+    // 先判断一下当前是否已经存储了dep对象，是否有值
     if (!this.newDepIds.has(id)) {
+      // 如果没有的话，把当前的id和dep存储到集合中
       this.newDepIds.add(id)
       this.newDeps.push(dep)
       if (!this.depIds.has(id)) {
+        // 最后会把watcher对象，添加到dep的sub中
         dep.addSub(this)
       }
     }

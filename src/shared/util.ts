@@ -358,9 +358,14 @@ export function once<T extends (...args: any[]) => any>(fn: T): T {
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is#polyfill
 export function hasChanged(x: unknown, y: unknown): boolean {
+  // 比较地址
   if (x === y) {
     return x === 0 && 1 / x !== 1 / (y as number)
   } else {
+    // 为了判断NAN的存在
+    // 如果新值等于旧值，或者新值旧值为NaN则为false
+    // console.log(NaN === NaN)  => false
+    // Object.is(NaN, 0/0);  => true
     return x === x || y === y
   }
 }

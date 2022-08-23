@@ -211,9 +211,10 @@ export function mountComponent(
     watcherOptions.onTrigger = e => callHook(vm, 'renderTriggered', [e])
   }
 
-  // we set this to vm._watcher inside the watcher's constructor
-  // since the watcher's initial patch may call $forceUpdate (e.g. inside child
-  // component's mounted hook), which relies on vm._watcher being already defined
+  //我们将其设置为vm._watcher在watcher的构造函数中
+  //因为观察者的初始补丁可能会调用$forceUpdate(例如inside child组件挂载的钩子)，它依赖于vm._watcher已经定义
+
+  //
   new Watcher(
     vm,
     updateComponent,

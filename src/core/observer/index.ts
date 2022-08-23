@@ -41,45 +41,45 @@ const mockDep = {
 } as Dep
 
 /**
- * Observer class that is attached to each observed
- * object. Once attached, the observer converts the target
- * object's property keys into getter/setters that
- * collect dependencies and dispatch updates.
  * 附加到每个被观察对象的Observer类。一旦附加，观察者就会将目标对象的属性键转换为getter/setter来收集依赖关系和分派更新。
  */
 export class Observer {
-  dep: Dep
+  dep: Dep  // 为属性的子对象收集依赖
   vmCount: number // 以这个对象作为根$data的vm的数量
 
   // value是观测对象，dep是依赖对象，vmCount实例计数器
   constructor(public value: any, public shallow = false, public mock = false) {
     // this.value = value
     this.dep = mock ? mockDep : new Dep()
-    // 初始化实例vmCount为0
+    // 1. 初始化实例vmCount为0
     this.vmCount = 0
-    // 使用def函数，给实例挂载到观察者对象的__ob__属性，在入口中判断__ob__就是在这设置的
+    // 2. 使用def函数，给实例挂载到观察者对象的__ob__属性，在入口中判断__ob__就是在这设置的
     // def就是对Object.defineProperty进行一个封装
     def(value, '__ob__', this)
-    // 数组的响应式处理，先判断是否是数组
+    // 3. 数组的响应式处理，先判断是否是数组
     if (isArray(value)) {
       if (!mock) {
+        // 3.1 判断当前浏览器是否支持对象原型这个属性（处理兼容性问题）
         if (hasProto) {
+          // 改变数组对象的原型属性，使其指向arrayMethods,这个对象中修补了push pop 等方法，但是他的原型指向的是数组构造函数的原型
           /* eslint-disable no-proto */
           ;(value as any).__proto__ = arrayMethods
           /* eslint-enable no-proto */
         } else {
           for (let i = 0, l = arrayKeys.length; i < l; i++) {
             const key = arrayKeys[i]
+            // 将修补过后的方法，重新设置到数组对象的原型上
             def(value, key, arrayMethods[key])
           }
         }
       }
       if (!shallow) {
-        // 为数组中的每一个对象创建一个observer实例
+        // 4. 为数组中的每一个对象创建响应式对象
         this.observeArray(value)
       }
     } else {
-      /**
+      /** 如果不是数组进行以下操作
+       *
        * 遍历所有属性并将它们转换为getter/setter。只有当值类型为Object时才应该调用此方法。
        */
       const keys = Object.keys(value)
@@ -93,6 +93,7 @@ export class Observer {
   /**
    * Observe a list of Array items.
    */
+  // 循环数组中每一个元素，如果是对象的话，为其创建响应式
   observeArray(value: any[]) {
     for (let i = 0, l = value.length; i < l; i++) {
       observe(value[i], false, this.mock)
@@ -185,8 +186,9 @@ export function defineReactive(
     val = obj[key]
   }
 
-  // 判断shallow（是否浅层监听）是否是false,
+  // 判断shallow（是否浅层监听）如果不是浅层监听，则执行以下步骤
   // 判断是否递归观察子对象, 并将子对象属性转换成getter/setter,返回子观察对象
+  // 把值传入observer，在observer中会判断这个值是否是对象。如果是对象的话，会创建observer对象，并赋值给childOb
   let childOb = !shallow && observe(val, false, mock)
 
   // 把属性转换成getter和setter，也可以设置成可枚举可配置的
@@ -197,7 +199,9 @@ export function defineReactive(
       // 如果用户设置了预定义的getter存在，则value等于getter调用的返回值
       // 否则直接赋予属性值
       const value = getter ? getter.call(obj) : val
-      // 如果存在当前依赖目标，即watcher对象，则建立依赖
+
+      // 依赖收集 下面分为开发环境和生产环境
+      // 1. 如果存在当前依赖目标target，即watcher对象，则建立依赖
       if (Dep.target) {
         if (__DEV__) {
           dep.depend({
@@ -206,13 +210,19 @@ export function defineReactive(
             key
           })
         } else {
+          // 首先会把当前dep对象添加到watcher的依赖中，最后把watcher对象添加到subs数组中
           dep.depend()
         }
-        // 如果子观察目标存在，建立子对象的依赖关系
+        // 1.1 首先判断了子对象的观察者对象，如果子观察目标存在，建立子对象的依赖关系
         if (childOb) {
+          // 每一个observer对象都有dep属性，再调用depend方法，让子对象收集依赖
+          // observer 中的dep为当前对象的子对象收集依赖
+          // 给子对象添加依赖
           childOb.dep.depend()
-          // 如果属性是数组，则特殊处理收集数组对象依赖
+
+          // 1.1. 如果属性是数组，则特殊处理收集数组对象依赖
           if (isArray(value)) {
+            // 将watcher对象，添加到depend数组中
             dependArray(value)
           }
         }
@@ -221,26 +231,35 @@ export function defineReactive(
       return isRef(value) && !shallow ? value.value : value
     },
     set: function reactiveSetter(newVal) {
-      // 先获取旧值
+      // 先获取旧值，如果用户设置了getter，那就调用getter的返回返回值
       const value = getter ? getter.call(obj) : val
+      // hasChanged方法 判断新值是否等于旧值,里面进行了判断,尤其是对NaN,如果都为NaN的话会返回false，此时取反，进入return
       if (!hasChanged(value, newVal)) {
         return
       }
       if (__DEV__ && customSetter) {
         customSetter()
       }
+
+      // 如果自定义的setter存在则调用，否则直接更新值
       if (setter) {
         setter.call(obj, newVal)
       } else if (getter) {
+        // 如果没有setter直接返回
         // #7981: for accessor properties without setter
         return
       } else if (!shallow && isRef(value) && !isRef(newVal)) {
+        // 如果不是浅层监听，老值是ref，新值不是ref，则直接赋值
         value.value = newVal
         return
       } else {
         val = newVal
       }
+
+      // 如果新值是对象，不是浅层监听，则执行以下步骤
+      // 判断是否递归观察子对象, 并将子对象属性转换成getter/setter,返回子观察对象
       childOb = !shallow && observe(newVal, false, mock)
+      // 派发更新（发布更改通知）
       if (__DEV__) {
         dep.notify({
           type: TriggerOpTypes.SET,
@@ -370,6 +389,7 @@ export function del(target: any[] | object, key: any) {
 /**
  * Collect dependencies on array elements when the array is touched, since
  * we cannot intercept array element access like property getters.
+ * 当数组被触发时，收集对数组元素的依赖关系，因为我们不能像属性getter那样拦截数组元素访问。
  */
 function dependArray(value: Array<any>) {
   for (let e, i = 0, l = value.length; i < l; i++) {

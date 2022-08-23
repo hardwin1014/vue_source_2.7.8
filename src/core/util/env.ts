@@ -1,4 +1,4 @@
-// can we use __proto__?
+// can we use __proto__? 判断当前对象中是否有__proto__,也就是当前浏览器是否支持对象原型这个属性
 export const hasProto = '__proto__' in {}
 
 // Browser environment sniffing
