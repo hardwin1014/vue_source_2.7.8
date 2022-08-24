@@ -21,9 +21,6 @@ import { activeEffectScope, recordEffectScope } from 'v3/reactivity/effectScope'
 
 let uid = 0
 
-/**
- * @internal
- */
 export interface WatcherOptions extends DebuggerOptions {
   deep?: boolean
   user?: boolean
@@ -36,7 +33,7 @@ export interface WatcherOptions extends DebuggerOptions {
  * A watcher parses an expression, collects dependencies,
  * and fires callback when the expression value changes.
  * This is used for both the $watch() api and directives.
- * @internal
+ *
  */
 export default class Watcher implements DepTarget {
   vm?: Component | null
@@ -96,9 +93,9 @@ export default class Watcher implements DepTarget {
       this.deep = this.user = this.lazy = this.sync = false
     }
     // 记录了很多属性
-    this.cb = cb // noop  cb传入的是一个空的函数
+    this.cb = cb // noop(渲染watcher传入的是空函数)，用户渲染和计算属性渲染会传入函数
     this.id = ++uid // uid for batching  唯一标识watcher，用来自增
-    this.active = true // 标识当前watcher是否是活动的watcher，默认为true
+    this.active = true // 标识当前watcher是否是存活的watcher，默认为true
     this.post = false
     this.dirty = this.lazy // for lazy watchers 延迟执行（计算属性）
     this.deps = []
@@ -108,6 +105,7 @@ export default class Watcher implements DepTarget {
     this.expression = __DEV__ ? expOrFn.toString() : ''
 
     // getter的解析表达式
+    // getter 会存储传过来的参数，如果是函数，赋值给getter
     if (isFunction(expOrFn)) {
       this.getter = expOrFn
     } else {
@@ -133,6 +131,10 @@ export default class Watcher implements DepTarget {
 
   /**
    * Evaluate the getter, and re-collect dependencies.
+   * 求值getter，并重新收集依赖项。
+   *
+   * 如果是渲染watcher的话，会调用getter，此时getter存储的是updateComponent,去更新视图
+   *
    */
   get() {
     // 把当前的watcher入栈，为什么要入栈里面呢？
@@ -141,8 +143,9 @@ export default class Watcher implements DepTarget {
     let value
     const vm = this.vm
     try {
-      // 如果是渲染函数的话，getter里面存储的是updateComponent
-      // 所以在这执行updateComponent,执行完之后把虚拟dom生成真实dom渲染到页面上来
+      // 如果是渲染函数的话，getter里面存储的是updateComponent，因为在创建watcher的时候传入的是updateComponent
+      // 这里会调用lifecycle文件中的mountComponent方法，中的updateComponent方法
+      // 执行updateComponent,执行完之后把虚拟dom生成真实dom渲染到页面上来
       value = this.getter.call(vm, vm)
     } catch (e: any) {
       if (this.user) {
@@ -151,10 +154,9 @@ export default class Watcher implements DepTarget {
         throw e
       }
     } finally {
-
-      // watcher每个属性，这样它们都被跟踪为
-      // 依赖的深度监视
+      // 深度监听属性
       // 当我们监听一个对象的话，会监听对象下的子属性
+      // 如果对象下的属性还有值的话，会继续触发watcher
       if (this.deep) {
         traverse(value)
       }
@@ -164,6 +166,7 @@ export default class Watcher implements DepTarget {
       // 清理依赖项收集，把watcher从subs数组中移除,并且把watcher中记录的dep也清除
       this.cleanupDeps()
     }
+    // undefined ,因为updateComponent什么也没有返回
     return value
   }
 
@@ -207,8 +210,10 @@ export default class Watcher implements DepTarget {
   }
 
   /**
-   * Subscriber interface.
-   * Will be called when a dependency changes.
+   * 用户界面更新。
+   * 将在依赖项更改时调用
+   *
+   * 渲染watcher中的lazy和sync都为false
    */
   update() {
     /* istanbul ignore else */
@@ -224,10 +229,15 @@ export default class Watcher implements DepTarget {
   /**
    * Scheduler job interface.
    * Will be called by the scheduler.
+   * run方法会更新视图
+   * 在Scheduler.ts中调用
    */
   run() {
+    // 判断标记这个watcher是否是存活的状态，默认是true
     if (this.active) {
+      // 调用get方法，pushTarget,get中调用了getter会更新视图
       const value = this.get()
+      // 如果是用户watcher，会继续往后执行
       if (
         value !== this.value ||
         // Deep watchers and watchers on Object/Arrays should fire even
@@ -236,11 +246,14 @@ export default class Watcher implements DepTarget {
         isObject(value) ||
         this.deep
       ) {
-        // set new value
+        // 获取旧值
         const oldValue = this.value
+        // 记录新值
         this.value = value
+        // 如果是用户watcher，要调用cb回调函数（和渲染watcher无关，渲染watcher的cb传入的是noop）
         if (this.user) {
           const info = `callback for watcher "${this.expression}"`
+          // 用户watcher，下面处理的方法，里面会加上try catch，考虑事情非常全面
           invokeWithErrorHandling(
             this.cb,
             this.vm,

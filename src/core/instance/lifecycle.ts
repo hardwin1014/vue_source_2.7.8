@@ -89,8 +89,8 @@ export function lifecycleMixin(Vue: typeof Component) {
     if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
       vm.$parent.$el = vm.$el
     }
-    //调度器调用updated钩子来确保子钩子被更新
-    //在父类的钩子中更新。
+    // 调度器调用updated钩子来确保子钩子被更新
+    // 在父类的钩子中更新
   }
 
   // 强制更新，使用watch监听
@@ -216,10 +216,10 @@ export function mountComponent(
     watcherOptions.onTrigger = e => callHook(vm, 'renderTriggered', [e])
   }
 
-  //我们将其设置为vm._watcher在watcher的构造函数中
-  //因为观察者的初始补丁可能会调用$forceUpdate(例如inside child组件挂载的钩子)，它依赖于vm._watcher已经定义
+  // 我们将其设置为vm._watcher在watcher的构造函数中
+  // 因为观察者的初始补丁可能会调用$forceUpdate(例如inside child组件挂载的钩子)，它依赖于vm._watcher已经定义
 
-  // 创建Watcher对象，传入 vue实例、updateComponent、noop是空函数，对渲染watcher是没有用，其他两个有用、watcherOptions函数、true是标识当前创建的watcher是渲染watcher
+  // 创建Watcher对象，传入 vue实例、updateComp有onent、noop是空函数，对渲染watcher是没用，其他两个有用、watcherOptions函数、true是标识当前创建的watcher是渲染watcher
   new Watcher(
     vm,
     updateComponent,

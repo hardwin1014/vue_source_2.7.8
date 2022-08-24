@@ -5,7 +5,7 @@ import { DebuggerOptions, DebuggerEventExtraInfo } from 'v3'
 let uid = 0
 
 /**
- * @internal
+ * update方法在watcher类中
  */
 export interface DepTarget extends DebuggerOptions {
   id: number
@@ -55,15 +55,17 @@ export default class Dep {
     }
   }
 
+  // 发布通知
   notify(info?: DebuggerEventExtraInfo) {
-    // stabilize the subscriber list first
+    // 调用slice对数组进行克隆，先把subs数组克隆一份，这样操作的意思是：后面有可能给this.subs新增加watcher对象，此时增加的是不做处理的
     const subs = this.subs.slice()
     if (__DEV__ && !config.async) {
-      // subs aren't sorted in scheduler if not running async
-      // we need to sort them now to make sure they fire in correct
-      // order
+      // 如果不运行async, sub不会在调度程序中排序
+      // 我们现在需要对它们进行分类，以确保它们正确的顺序
       subs.sort((a, b) => a.id - b.id)
     }
+
+    // 遍历subs数组，找到update方法，执行update
     for (let i = 0, l = subs.length; i < l; i++) {
       if (__DEV__ && info) {
         const sub = subs[i]
@@ -73,6 +75,8 @@ export default class Dep {
             ...info
           })
       }
+      // 循环数组，找到update方法进行更新
+      // 当前为渲染watcher，lazy和sync默认为false
       subs[i].update()
     }
   }

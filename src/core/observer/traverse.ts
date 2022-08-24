@@ -6,9 +6,7 @@ import { isRef } from '../../v3'
 const seenObjects = new Set()
 
 /**
- * Recursively traverse an object to evoke all converted
- * getters, so that every nested property inside the object
- * is collected as a "deep" dependency.
+ * 递归遍历一个对象以调用所有转换的getter，这样对象内的每个嵌套属性都被收集为“深度”依赖项。
  */
 export function traverse(val: any) {
   _traverse(val, seenObjects)

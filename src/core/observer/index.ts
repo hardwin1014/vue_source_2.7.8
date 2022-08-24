@@ -153,8 +153,8 @@ export function defineReactive(
   mock?: boolean
 ) {
   // 负责为当前属性收集依赖，创建依赖对象实例
+  // 为每一个对象创建一个收集依赖对象实例
   const dep = new Dep()
-
   /**
    * object.getownpropertydescriptor()方法返回一个对象，
    * 该对象描述给定对象上特定属性的配置(也就是说，直接出现在对象上而不是对象的原型链中)。
@@ -223,6 +223,7 @@ export function defineReactive(
           // 1.1. 如果属性是数组，则特殊处理收集数组对象依赖
           if (isArray(value)) {
             // 将watcher对象，添加到depend数组中
+            // 修改数组属性的时候，并没有发送通知
             dependArray(value)
           }
         }
