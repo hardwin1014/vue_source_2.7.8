@@ -55,7 +55,7 @@ export default class Dep {
     }
   }
 
-  // 发布通知
+  // 发布通知，最终调用每个watcher的update方法
   notify(info?: DebuggerEventExtraInfo) {
     // 调用slice对数组进行克隆，先把subs数组克隆一份，这样操作的意思是：后面有可能给this.subs新增加watcher对象，此时增加的是不做处理的
     const subs = this.subs.slice()

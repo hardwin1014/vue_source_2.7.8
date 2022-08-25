@@ -32,10 +32,10 @@ methodsToPatch.forEach(function (method) {
   // 2. 调用Object.defineProperty()   重新定义修改数组的方法
   // args是调用数组的方法传入的参数
   def(arrayMethods, method, function mutator(...args) {
-    // 3.执行数组的原始方法，调用apply改变内部的this指向，获取到结果
+    // 3.执行数组的原始方法，调用apply改变内部的this指向，改变成数组对象，获取到结果
     const result = original.apply(this, args)
     // 4. 因为这些改变了原数组的方法，需要做一些处理
-    // 获取数组对象的ob对象
+    // 获取数组对象的ob对象（observe对象）
     const ob = this.__ob__
     let inserted // 用来存储数组中新增的元素
     switch (method) {
@@ -44,7 +44,7 @@ methodsToPatch.forEach(function (method) {
       case 'unshift':
         inserted = args
         break
-      case 'splice': // splice的第三个元素是新增的值，把第三个值存储到inserted里面
+      case 'splice': // splice的第三个元素是新增的值，把第三个值存储到inserted里面，第三个元素是新插入的元素
         inserted = args.slice(2)
         break
     }
@@ -53,6 +53,7 @@ methodsToPatch.forEach(function (method) {
 
     // 6. 通知视图更改
     // 调用了修改数组的方法，调用数组的ob对象中的dep的notify发送通知
+    // 因为我们在收集依赖的时候，为每个对象创建过dep对象
     if (__DEV__) {
       ob.dep.notify({
         type: TriggerOpTypes.ARRAY_MUTATION,

@@ -21,7 +21,7 @@ export function isFalse(v: any): boolean {
 }
 
 /**
- * Check if value is primitive.
+ * 检查value是否为原始值。
  */
 export function isPrimitive(value: any): boolean {
   return (
@@ -68,7 +68,7 @@ export function isRegExp(v: any): v is RegExp {
 }
 
 /**
- * Check if val is a valid array index.
+ * 检查val是否是一个有效的数组索引。
  */
 export function isValidArrayIndex(val: any): boolean {
   const n = parseFloat(String(val))

@@ -282,6 +282,7 @@ export function defineReactive(
  * Set a property on an object. Adds the new property and
  * triggers change notification if the property doesn't
  * already exist.
+ * 使用Vue.set帮助对象和数组增加响应式
  */
 export function set<T>(array: T[], key: number, value: T): T
 export function set<T>(object: object, key: string | number, value: T): T
@@ -290,29 +291,46 @@ export function set(
   key: any,
   val: any
 ): any {
+  // 如果对象设置的值的undefined和原始值，会发送警告，在开发环境下
   if (__DEV__ && (isUndef(target) || isPrimitive(target))) {
     warn(
       `Cannot set reactive property on undefined, null, or primitive value: ${target}`
     )
   }
+  // 判断目标值是否是只读的
   if (isReadonly(target)) {
     __DEV__ && warn(`Set operation on key "${key}" failed: target is readonly.`)
     return
   }
+
+  // 获取target对象的ob属性，ob存储的值就是observer对象
   const ob = (target as any).__ob__
+
+  // 1. 处理数组(使用splice方法增加响应式)
+  // 判断target是否是对象，key是否是合法的索引
   if (isArray(target) && isValidArrayIndex(key)) {
+    // 把最大的值设置成target.length，防止传入的值大于length属性
     target.length = Math.max(target.length, key)
+
+    // 通过splice对key位置的元素进行替换
+    // splice在array.js进行了响应式化的处理,并不是数组的原生方法
     target.splice(key, 1, val)
-    // when mocking for SSR, array methods are not hijacked
+
+    // 当模拟SSR时，数组方法不会被劫持
     if (ob && !ob.shallow && ob.mock) {
       observe(val, false, true)
     }
     return val
   }
+
+  // 2. 处理对象的属性
+  // 如果要添加的key，在数组中已存在，就直接赋值
   if (key in target && !(key in Object.prototype)) {
     target[key] = val
     return val
   }
+  // 获取target中的observer对象
+  // 如果target是vue实例或者$data，会发送一个警告，返回值
   if ((target as any)._isVue || (ob && ob.vmCount)) {
     __DEV__ &&
       warn(
@@ -321,11 +339,17 @@ export function set(
       )
     return val
   }
+
+  // 如果ob对象不存在，target不是响应式对象直接赋值，把值返回，
   if (!ob) {
     target[key] = val
     return val
   }
+
+  // 把属性挂载到ob.value （target对象，observe对象）上来，并设置setter和getter
   defineReactive(ob.value, key, val, undefined, ob.shallow, ob.mock)
+
+  // 最后发送通知
   if (__DEV__) {
     ob.dep.notify({
       type: TriggerOpTypes.ADD,
@@ -337,6 +361,7 @@ export function set(
   } else {
     ob.dep.notify()
   }
+  // 最后把这个值返回
   return val
 }
 
