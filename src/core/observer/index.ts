@@ -367,20 +367,32 @@ export function set(
 
 /**
  * Delete a property and trigger change if necessary.
+ * 如有必要，删除属性和触发器更改。
  */
 export function del<T>(array: T[], key: number): void
 export function del(object: object, key: string | number): void
 export function del(target: any[] | object, key: any) {
+  // 判断传入的target是否是undefined，或者是原始值，发送警告
   if (__DEV__ && (isUndef(target) || isPrimitive(target))) {
     warn(
       `Cannot delete reactive property on undefined, null, or primitive value: ${target}`
     )
   }
+
+  // 1. 数组删除响应式（splice）
+  // 判断target是否是数组,以及key是否合法
   if (isArray(target) && isValidArrayIndex(key)) {
+    // 如果是数组通过splice删除
+    // splice（指定位置的元素，几个元素）
     target.splice(key, 1)
     return
   }
+
+  // 2. 对象删除响应式
+  // 获取target的ob对象
   const ob = (target as any).__ob__
+
+  // target 如果是Vue实例或者$data对象，警告直接返回
   if ((target as any)._isVue || (ob && ob.vmCount)) {
     __DEV__ &&
       warn(
@@ -389,18 +401,26 @@ export function del(target: any[] | object, key: any) {
       )
     return
   }
+
+  // 如果是只读的，警告直接返回
   if (isReadonly(target)) {
     __DEV__ &&
       warn(`Delete operation on key "${key}" failed: target is readonly.`)
     return
   }
+
+  // 检测target对象是否有当前key属性，如果没有直接返回
   if (!hasOwn(target, key)) {
     return
   }
+
+  // 删除属性
   delete target[key]
   if (!ob) {
     return
   }
+
+  // 发送通知，改变视图
   if (__DEV__) {
     ob.dep.notify({
       type: TriggerOpTypes.DELETE,
