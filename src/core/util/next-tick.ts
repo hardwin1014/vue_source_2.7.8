@@ -123,12 +123,14 @@ export function nextTick(): Promise<void>
 export function nextTick<T>(this: T, cb: (this: T, ...args: any[]) => any): void
 export function nextTick<T>(cb: (this: T, ...args: any[]) => any, ctx: T): void
 
+// cb是传入函数，ctx的vue实例
 export function nextTick(cb?: (...args: any[]) => any, ctx?: object) {
   let _resolve
 
   // callbacks就是一个数组，把cb加上异常处理存入callbacks数组中
   callbacks.push(() => {
     // cb 是用户传递的函数，Vue认为用户传递的函数都是危险的，所以加上try catch
+    // 如果cb函数没有传递，会判断_resolve,如果_resolve有值的话，会直接调用resolve
     if (cb) {
       try {
         // 调用cb()
@@ -146,9 +148,11 @@ export function nextTick(cb?: (...args: any[]) => any, ctx?: object) {
     // 遍历callbacks数组，找到数组中的函数，依次执行
     timerFunc()
   }
+
+
   // $flow-disable-line
   if (!cb && typeof Promise !== 'undefined') {
-    // 返回 promise 对象
+    // 返回 promise 对象，_resolve其实就是接收promise接收的resolve
     return new Promise(resolve => {
       _resolve = resolve
     })
