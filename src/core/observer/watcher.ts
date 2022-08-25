@@ -126,6 +126,7 @@ export default class Watcher implements DepTarget {
       }
     }
     // 会判断lazy，如果是渲染watcher，lazy默认为false，会返回get方法
+    // 计算属性的时候，先不对get求值，计算属性这个方法放在模板属性中调用的，所以是在render
     this.value = this.lazy ? undefined : this.get()
   }
 
@@ -134,7 +135,6 @@ export default class Watcher implements DepTarget {
    * 求值getter，并重新收集依赖项。
    *
    * 如果是渲染watcher的话，会调用getter，此时getter存储的是updateComponent,去更新视图
-   *
    */
   get() {
     // 把当前的watcher入栈，为什么要入栈里面呢？
@@ -250,6 +250,8 @@ export default class Watcher implements DepTarget {
         const oldValue = this.value
         // 记录新值
         this.value = value
+
+        // 此时的user在，挂载$watcher 创建用户watcher的时候初始化为true
         // 如果是用户watcher，要调用cb回调函数（和渲染watcher无关，渲染watcher的cb传入的是noop）
         if (this.user) {
           const info = `callback for watcher "${this.expression}"`
@@ -289,6 +291,8 @@ export default class Watcher implements DepTarget {
 
   /**
    * Remove self from all dependencies' subscriber list.
+   * 从所有依赖项的订阅者列表中删除。
+   *
    */
   teardown() {
     if (this.vm && !this.vm._isBeingDestroyed) {

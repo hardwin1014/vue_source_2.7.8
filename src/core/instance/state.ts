@@ -73,6 +73,8 @@ export function initState(vm: Component) {
 
   // 初始化了计算属性和监听器，并注入到了vue实例里面来
   if (opts.computed) initComputed(vm, opts.computed)
+
+  // 先获取options中的watch，也就是vue里面的属性watch
   if (opts.watch && opts.watch !== nativeWatch) {
     initWatch(vm, opts.watch)
   }
@@ -200,8 +202,9 @@ export function getData(data: Function, vm: Component): any {
   }
 }
 
+// 常量
 const computedWatcherOptions = { lazy: true }
-
+// 计算属性watcher，传入lazy默认为true
 function initComputed(vm: Component, computed: Object) {
   // $flow-disable-line
   const watchers = (vm._computedWatchers = Object.create(null))
@@ -341,13 +344,18 @@ function initMethods(vm: Component, methods: Object) {
 }
 
 function initWatch(vm: Component, watch: Object) {
+  // 先遍历选项里面的watch对象，找到所有属性
   for (const key in watch) {
+    // 获取所有值
     const handler = watch[key]
+    //如果是数组，会把监听的属性，创建多个监听的属性，也就是当这个属性发生变化的时候，会执行多个回调函数
     if (isArray(handler)) {
       for (let i = 0; i < handler.length; i++) {
+        // 传递了vue实例，属性，和属性对应的值
         createWatcher(vm, key, handler[i])
       }
     } else {
+      // 传递了vue实例，属性，和函数
       createWatcher(vm, key, handler)
     }
   }
@@ -359,13 +367,18 @@ function createWatcher(
   handler: any,
   options?: Object
 ) {
+  // 如果handle是一个对象,会把对象的handler的handler取出来
   if (isPlainObject(handler)) {
     options = handler
-    handler = handler.handler
+    handler = handler.handler // 回调函数
   }
+  // 如果传入的handler是字符串，会去vue实例中找这个字符串对应的函数，也就是methods中的方法
   if (typeof handler === 'string') {
+    // 把methods的方法作为回调函数
     handler = vm[handler]
   }
+
+  // 把解析好的数据作为$watch的参数
   return vm.$watch(expOrFn, handler, options)
 }
 
@@ -407,25 +420,37 @@ export function stateMixin(Vue: typeof Component) {
   Vue.prototype.$set = set
   Vue.prototype.$delete = del
 
-  // 挂载$watch
+  // 挂载$watch  $watch是一个实例方法，没有静态方法，原因就是用到了vue的实例
   Vue.prototype.$watch = function (
     expOrFn: string | (() => any),
-    cb: any,
+    cb: any,// 可以直接传函数，也可以传对象
     options?: Record<string, any>
   ): Function {
+    // 先获取vue实例
     const vm: Component = this
+    // 对对象重新解析
+    // 判断watch传入的第二个参数，是否是原始对象
+    // 如果是对象的话，在这重新对对象解析
     if (isPlainObject(cb)) {
+      // 解析对象类型的参数
       return createWatcher(vm, expOrFn, cb, options)
     }
     options = options || {}
+    // 标记当前创建的watcher为用户watcher
     options.user = true
+    // 创建用户watcher对象
     const watcher = new Watcher(vm, expOrFn, cb, options)
+    // 判断immediate如果为true，就立即执行
     if (options.immediate) {
+      // 立即执行一次cb回调，并且把值传入
       const info = `callback for immediate watcher "${watcher.expression}"`
       pushTarget()
+      // 里面也是立即执行cb函数
       invokeWithErrorHandling(cb, vm, [watcher.value], vm, info)
       popTarget()
     }
+
+    // 返回取消监听的方法
     return function unwatchFn() {
       watcher.teardown()
     }
