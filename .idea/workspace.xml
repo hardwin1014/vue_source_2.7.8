@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="49938206-4f5a-4c6b-8db3-d0adedc58c46" name="变更" comment="">
+    <list default="true" id="1d6691a9-c198-4005-9d7a-6788e82cee66" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/instance/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/state.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/observer/watcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/observer/watcher.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/util/next-tick.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/util/next-tick.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,72 +14,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es5.d.ts" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectId" id="2CsXOCHPIc2cX4BmlINRUDnOyxS" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/weixinhui/Documents/GitHub/vue_source_2.7.8",
-    "nodejs_package_manager_path": "pnpm",
-    "prettierjs.PrettierConfiguration.Package": "E:\\源码分析\\vue\\node_modules\\prettier",
-    "ts.external.directory.path": "E:\\源码分析\\vue\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "E:\\源码分析\\vue\\node_modules\\typescript\\lib"
   }
 }]]></component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="默认任务">
-      <changelist id="49938206-4f5a-4c6b-8db3-d0adedc58c46" name="变更" comment="" />
-      <created>1659592231473</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1659592231473</updated>
-      <workItem from="1659592232902" duration="154000" />
-      <workItem from="1659592399807" duration="11572000" />
-      <workItem from="1659662542493" duration="805000" />
-      <workItem from="1659663765863" duration="249000" />
-      <workItem from="1659671939072" duration="9579000" />
-      <workItem from="1659920595890" duration="7911000" />
-      <workItem from="1660009176505" duration="1215000" />
-      <workItem from="1660092683591" duration="2014000" />
-      <workItem from="1660109208872" duration="11714000" />
-      <workItem from="1660184381151" duration="1903000" />
-      <workItem from="1660790256994" duration="14402000" />
-      <workItem from="1661065224386" duration="2679000" />
-    </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>
