@@ -55,7 +55,7 @@ let timerFunc
 // nextTick行为利用可访问的微任务队列
 // 通过native Promise.then或MutationObserver
 // MutationObserver有更广泛的支持，但是它有严重的bug
-// UIWebView在iOS >= 9.3.3时触发的触摸事件处理程序。它触发几次后完全停止工作…所以,如果本地Promise是可用的，我们将使用它:
+// UIWebView(ios开发中浏览器用到的控件)在iOS >= 9.3.3时触发的触摸事件处理程序。它触发几次后完全停止工作…所以,如果本地Promise是可用的，我们将使用它:
 if (typeof Promise !== 'undefined' && isNative(Promise)) {
   const p = Promise.resolve()
   timerFunc = () => {
@@ -73,13 +73,15 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
     // 在有问题的UIWebViews（iOS开发时使用到的控件）中，，Promise.then 不会完全跳出但是它可能会陷入一个奇怪的状态，
     // 回调被推入微任务队列，但队列不会被刷新，直到浏览器需要做一些其他的工作，例如处理计时处理
     // 因此,我们可以通过添加一个空定时器来"强制"微任务队列被刷新。
+
+    // 如果是iOS开发下会使用setTimeout
     if (isIOS) setTimeout(noop)
   }
   // 并且标志当前的任务队列使用的是微任务
   isUsingMicroTask = true
 } else if (
   // MutationObserver监听dom对象的改变，dom改变之后会执行一个回调函数。这个回调函数也是以微任务的形式执行的
-  // 判断不是ie浏览器（MutationObserver在IE10，IE11中才支持（IE11中有些小问题）），并且当前浏览器支持MutationObserver，
+  // 判断不是ie浏览器（MutationObserver在IE10，IE11中才支持（IE11中有些小问题）），并且当前浏览器支持MutationObserver
   !isIE &&
   typeof MutationObserver !== 'undefined' &&
   (isNative(MutationObserver) ||
@@ -89,7 +91,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
   // Use MutationObserver where native Promise is not available,
   // e.g. PhantomJS, iOS7, Android 4.4
   // (#6466 MutationObserver is unreliable in IE11)
-  // （为了兼容这些浏览器，这些浏览器中会使用MutationObserver（微任务）执行）
+  // （使用MutationObserver为了兼容这些浏览器，这些浏览器中会使用MutationObserver（微任务）执行）
   let counter = 1
   const observer = new MutationObserver(flushCallbacks)
   const textNode = document.createTextNode(String(counter))
