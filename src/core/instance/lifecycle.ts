@@ -65,19 +65,20 @@ export function lifecycleMixin(Vue: typeof Component) {
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
     const vm: Component = this
     const prevEl = vm.$el
-    const prevVnode = vm._vnode
+    const prevVnode = vm._vnode // _vnode记录的是之前所处理的Vnode对象
     const restoreActiveInstance = setActiveInstance(vm)
     vm._vnode = vnode
     // Vue.prototype.__patch__被注入到入口点, __patch__把虚拟DOM转换成真实的DOM
-    // 基于渲染后端使用
+    // 如果不存在preVnode，证明是首次渲染
     if (!prevVnode) {
-      // 最初的渲染
+      // 最初的渲染，__patch__会把$el这个真实dom转换成虚拟dom,跟新的Vnode的去比较，并且比较的结果更新到真实dom,并且把真实dom存储到$el上
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
     } else {
-      // 更新数据渲染
+      // update 更新数据渲染
       vm.$el = vm.__patch__(prevVnode, vnode)
     }
     restoreActiveInstance()
+
     // update __vue__ reference
     if (prevEl) {
       prevEl.__vue__ = null
