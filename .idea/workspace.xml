@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1d6691a9-c198-4005-9d7a-6788e82cee66" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/util/next-tick.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/util/next-tick.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/instance/lifecycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/lifecycle.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/instance/render.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/render.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/vdom/create-element.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/vdom/create-element.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/vdom/helpers/normalize-children.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/vdom/helpers/normalize-children.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/vdom/vnode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/vdom/vnode.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,13 +20,50 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es5.d.ts" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2E0iTa5SP9zhIPsstBECx6bYXQd" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "pnpm",
+    "prettierjs.PrettierConfiguration.Package": "E:\\源码分析\\vue\\node_modules\\prettier",
     "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "E:\\源码分析\\vue\\node_modules\\typescript\\lib"
+    "ts.external.directory.path": "E:\\源码分析\\vue\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="1d6691a9-c198-4005-9d7a-6788e82cee66" name="变更" comment="" />
+      <created>1661738910985</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1661738910985</updated>
+      <workItem from="1661738921187" duration="11244000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

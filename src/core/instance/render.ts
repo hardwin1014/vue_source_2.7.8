@@ -39,14 +39,17 @@ export function initRender(vm: Component) {
   // args order: tag, data, children, normalizationType, alwaysNormalize
   // internal version is used by render functions compiled from templates
 
-
+  // 1. 当把template模板编译成render函数时，会调用vm._c
+  // 对编译生成的render进行渲染的方法
   // @ts-expect-error
   vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
   // normalization is always applied for the public version, used in
   // user-written render functions.
 
 
-  // h函数，把虚拟dom转换为真实dom，当把template模板编译成render函数时，会调用_c
+  // 对手写render函数进行渲染的方法
+  // h函数，把虚拟dom转换为真实dom，
+  // 2. 当render是由用户传递的时候，会调用$createElement
   // @ts-expect-error
   vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
 
@@ -116,7 +119,8 @@ export function renderMixin(Vue: typeof Component) {
   Vue.prototype._render = function (): VNode {
     const vm: Component = this
 
-    // 通过options获取render，这个render是用户定义的render或者是模板渲染的render
+    // 通过options获取render
+    // 从vue的选项中获取的，也就是用户传递的render或者模板渲染编译成的render
     const { render, _parentVnode } = vm.$options
 
     if (_parentVnode && vm._isMounted) {
@@ -143,7 +147,7 @@ export function renderMixin(Vue: typeof Component) {
       setCurrentInstance(vm)
       currentRenderingInstance = vm
 
-      // 调用render  vm._renderProxy是为了改变render内部的this      vm.$createElement 是h函数，生成虚拟dom
+      // 调用render  vm._renderProxy是vue实例，为了改变render内部的this      vm.$createElement 是h函数，生成虚拟dom
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e: any) {
       handleError(e, vm, `render`)

@@ -54,7 +54,7 @@ export default class VNode {
     this.fnContext = undefined
     this.fnOptions = undefined
     this.fnScopeId = undefined
-    this.key = data && data.key
+    this.key = data && data.key // 通过data传递的key
     this.componentOptions = componentOptions
     this.componentInstance = undefined
     this.parent = undefined
@@ -78,8 +78,8 @@ export default class VNode {
 
 export const createEmptyVNode = (text: string = '') => {
   const node = new VNode()
-  node.text = text
-  node.isComment = true
+  node.text = text // 设置text为空字符串
+  node.isComment = true // 标明当前Vnode节点是注释节点
   return node
 }
 

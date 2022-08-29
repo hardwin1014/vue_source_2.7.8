@@ -174,6 +174,7 @@ export function mountComponent(
   }
   callHook(vm, 'beforeMount')
 
+  // mountComponent中定义了updateComponent，在这里定义赋值了，传给Watcher, 在Watcher内部调用updateComponent
   let updateComponent
   /* istanbul ignore if */
   if (__DEV__ && config.performance && mark) {
@@ -194,7 +195,7 @@ export function mountComponent(
       measure(`vue ${name} patch`, startTag, endTag)
     }
   } else {
-    // 这里调用了render和update
+    // 这里调用了render方法生成Vnode,传给update，在update里面把Vnode转换成真实DOM
     // render是用户传入的render函数，或者template编译成的render函数，作用：帮我们生成虚拟DOM
     // update帮我们调用了path函数，作用：对比新旧虚拟DOM的差异，并把差异更新到真实的dom上去
     updateComponent = () => {

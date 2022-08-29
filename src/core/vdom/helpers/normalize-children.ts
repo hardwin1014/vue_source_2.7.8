@@ -20,6 +20,8 @@ import {
 // normalization is needed - if any child is an Array, we flatten the whole
 // thing with Array.prototype.concat. It is guaranteed to be only 1-level deep
 // because functional components already normalize their own children.
+// 把二维数组转换为一维数组
+// 为什么这样做呢：如果组件中包含函数式组件，就证明当前组件是一个二维数组。
 export function simpleNormalizeChildren(children: any) {
   for (let i = 0; i < children.length; i++) {
     if (isArray(children[i])) {
@@ -34,9 +36,10 @@ export function simpleNormalizeChildren(children: any) {
 // with hand-written render functions / JSX. In such cases a full normalization
 // is needed to cater to all possible types of children values.
 export function normalizeChildren(children: any): Array<VNode> | undefined {
+  // 判断children是否是原始值，是的话转换成text文本节点
   return isPrimitive(children)
     ? [createTextVNode(children)]
-    : isArray(children)
+    : isArray(children)  // 如果是数组的话，会调用一个函数，将多维数组扁平化
     ? normalizeArrayChildren(children)
     : undefined
 }
@@ -45,6 +48,7 @@ function isTextNode(node): boolean {
   return isDef(node) && isDef(node.text) && isFalse(node.isComment)
 }
 
+// 将多维数组，扁平化
 function normalizeArrayChildren(
   children: any,
   nestedIndex?: string
