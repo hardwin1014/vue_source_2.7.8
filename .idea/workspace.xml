@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d6691a9-c198-4005-9d7a-6788e82cee66" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/src/core/instance/lifecycle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/instance/lifecycle.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/vdom/modules/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/vdom/modules/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/vdom/patch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/vdom/patch.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/modules/attrs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/modules/attrs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/modules/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/modules/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/node-ops.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/node-ops.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/patch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/patch.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +21,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es5.d.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/core/vdom/patch.ts" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -23,18 +31,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "pnpm",
-    "prettierjs.PrettierConfiguration.Package": "E:\\源码分析\\vue\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "E:\\源码分析\\vue\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/fronted/多租户总/tenant/ruoyi-ui&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;E:\\源码分析\\vue\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;E:\\源码分析\\vue\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -43,7 +52,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1661738910985</updated>
-      <workItem from="1661738921187" duration="11617000" />
+      <workItem from="1661738921187" duration="16411000" />
+      <workItem from="1661822756116" duration="1922000" />
+      <workItem from="1661843900426" duration="7528000" />
     </task>
     <servers />
   </component>

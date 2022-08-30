@@ -109,6 +109,7 @@ function baseSetAttr(el, key, value) {
   }
 }
 
+// 导出了两个属性，是vue的生命周期钩子函数
 export default {
   create: updateAttrs,
   update: updateAttrs

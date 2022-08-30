@@ -1,12 +1,14 @@
 import VNode from 'core/vdom/vnode'
 import { namespaceMap } from 'web/util/index'
 
+// 直接创建一个dom对象，把这个对象返回
 export function createElement(tagName: string, vnode: VNode): Element {
   const elm = document.createElement(tagName)
+  // 处理了一些select标签特殊的地方，如果不是select，直接返回
   if (tagName !== 'select') {
     return elm
   }
-  // false or null will remove the attribute but undefined will not
+  // 如果是select，并判断data中有attrs,并且有multiple，那就将multiple属性设置到dom上来，并返回这个属性
   if (
     vnode.data &&
     vnode.data.attrs &&

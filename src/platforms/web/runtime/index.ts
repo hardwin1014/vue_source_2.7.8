@@ -37,8 +37,8 @@ extend(Vue.options.components, platformComponents)
 
 // install platform patch function
 // 2. 注册__patch__方法
-// __patch__函数是把虚拟DOM转换成真实DOM,如果是浏览器环境就返回真实dom,如果不是，就返回空函数
-// inBrowser 判断是否是浏览器环境
+// __patch__函数是把虚拟DOM转换成真实DOM
+// 如果是浏览器环境就返回真实dom,如果不是，就返回空函数
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 
 // public mount method
