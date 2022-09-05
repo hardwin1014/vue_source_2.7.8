@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1d6691a9-c198-4005-9d7a-6788e82cee66" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/vdom/modules/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/vdom/modules/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/vdom/patch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/vdom/patch.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/modules/attrs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/modules/attrs.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/modules/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/modules/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/node-ops.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/node-ops.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/platforms/web/runtime/patch.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/platforms/web/runtime/patch.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +30,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/fronted/多租户总/tenant/ruoyi-ui&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/源码分析/midway-project&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;E:\\源码分析\\vue\\node_modules\\prettier&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
@@ -54,7 +48,10 @@
       <updated>1661738910985</updated>
       <workItem from="1661738921187" duration="16411000" />
       <workItem from="1661822756116" duration="1922000" />
-      <workItem from="1661843900426" duration="7528000" />
+      <workItem from="1661843900426" duration="8348000" />
+      <workItem from="1661909889611" duration="4943000" />
+      <workItem from="1661924759857" duration="38000" />
+      <workItem from="1662340330191" duration="15402000" />
     </task>
     <servers />
   </component>
